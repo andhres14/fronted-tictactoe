@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+.game-table :hover{
+  cursor: pointer;
+}
+
+tr {
+  line-height: 95px;
+  min-height: 95px;
+  height: 95px;
+}
+
+td {
+  width: 95px;
+}
+
+.text-game {
+  font-size: 90px;
+}
+
+.box-winner {
+  background: green;
+  color: white;
+}
+
+.img-game {
+  border-radius: 50%;
+}
+
+.center-c {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

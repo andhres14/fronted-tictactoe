@@ -1,0 +1,23 @@
+<div class="row justify-content-md-center">
+  <div class="col-12 text-center mb-6" style="margin-top: 30%">
+    <h1># Tic-Tac-Toe</h1>
+  </div>
+  <div class="col text-center">
+    <button type="button" class="btn btn-outline-success btn-lg" (click)="newGame()"><i class="fa fa-plus" aria-hidden="true"></i> Nueva Partida</button>
+  </div>
+
+  <div class="col text-center">
+    <button type="button" class="btn btn-outline-primary btn-lg" (click)="showGameInput()" *ngIf="!openInp"><i class="fa fa-sign-in" aria-hidden="true"></i>
+       Unirse a partida</button>
+    <div class="input-group mb-3" *ngIf="openInp">
+      <input type="number" [min]="1" class="form-control col-sm-5" [(ngModel)]="gameToJoin" placeholder="ID Partida"
+             aria-label="Game ID" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-outline-success" type="button" [disabled]="!gameToJoin"
+                (click)="joinToParty(gameToJoin)"><i class="fa fa-sign-in" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-outline-danger" type="button" (click)="showGameInput()"><i class="fa fa-close" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
