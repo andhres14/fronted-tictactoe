@@ -31,3 +31,8 @@ td {
   margin-left: auto;
   margin-right: auto;
 }
+
+.custom-disable {
+  pointer-events: none;
+}
+

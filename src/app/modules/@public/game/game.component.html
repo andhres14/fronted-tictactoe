@@ -1,6 +1,7 @@
 <div class="row justify-content-md-center">
   <div class="col-12 text-center mb-6" style="margin-top: 5%; margin-bottom: 5%">
-    <h1># Tic-Tac-Toe </h1>
+    <h1># Tic-Tac-Toe - Partida #{{ gameData.gameId }}</h1>
+    <span class="badge badge-primary" *ngIf="sending"><i class="fa fa-spin fa-refresh"></i> ENVIANDO...</span>
   </div>
 
   <div class="col">
@@ -9,8 +10,10 @@
     <img src="./assets/img/firstPlayer.png" alt="firstPlayer" height="150" width="150" class="img-game center-c">
     <br>
     <div class="text-center">
-      <span class="badge badge-success" *ngIf="gameData.firstPlayer.id === currentTurn">TURNO ACTUAL</span>
-      <span class="badge badge-secondary" *ngIf="gameData.firstPlayer.id !== currentTurn">ESPERA TU TURNO</span>
+      <span class="badge badge-success" *ngIf="gameOver && winnerId === gameData.firstPlayer.id "><i
+        class="fa fa-check-circle" aria-hidden="true"></i> ¡¡ ERES EL GANADOR !!</span> <br><br>
+      <span class="badge badge-primary" *ngIf="gameData.firstPlayer.id === currentTurn && !gameOver">TURNO ACTUAL</span>
+      <span class="badge badge-secondary" *ngIf="gameData.firstPlayer.id !== currentTurn && !gameOver">ESPERA TU TURNO</span>
     </div>
   </div>
 
@@ -19,25 +22,49 @@
     <table class="table table-bordered game-table">
       <tbody>
       <tr>
-        <td (click)="selectedBoxes(1)"><div class="text-game">{{ gameData.boxes['box_1'].value }}</div></td>
-        <td (click)="selectedBoxes(2)"><div class="text-game">{{ gameData.boxes['box_2'].value }}</div></td>
-        <td (click)="selectedBoxes(3)"><div class="text-game">{{ gameData.boxes['box_3'].value }}</div></td>
+        <td (click)="selectedBoxes(1)">
+          <div class="text-game">{{ gameData.boxes['box_1'].value }}</div>
+        </td>
+        <td (click)="selectedBoxes(2)">
+          <div class="text-game">{{ gameData.boxes['box_2'].value }}</div>
+        </td>
+        <td (click)="selectedBoxes(3)">
+          <div class="text-game">{{ gameData.boxes['box_3'].value }}</div>
+        </td>
       </tr>
       <tr>
-        <td (click)="selectedBoxes(4)"><div class="text-game">{{ gameData.boxes['box_4'].value }}</div></td>
-        <td (click)="selectedBoxes(5)"><div class="text-game">{{ gameData.boxes['box_5'].value }}</div></td>
-        <td (click)="selectedBoxes(6)"><div class="text-game">{{ gameData.boxes['box_6'].value }}</div></td>
+        <td (click)="selectedBoxes(4)">
+          <div class="text-game">{{ gameData.boxes['box_4'].value }}</div>
+        </td>
+        <td (click)="selectedBoxes(5)">
+          <div class="text-game">{{ gameData.boxes['box_5'].value }}</div>
+        </td>
+        <td (click)="selectedBoxes(6)">
+          <div class="text-game">{{ gameData.boxes['box_6'].value }}</div>
+        </td>
       </tr>
       <tr>
-        <td (click)="selectedBoxes(7)"><div class="text-game">{{ gameData.boxes['box_7'].value }}</div></td>
-        <td (click)="selectedBoxes(8)"><div class="text-game">{{ gameData.boxes['box_8'].value }}</div></td>
-        <td (click)="selectedBoxes(9)"><div class="text-game">{{ gameData.boxes['box_9'].value }}</div></td>
+        <td (click)="selectedBoxes(7)">
+          <div class="text-game">{{ gameData.boxes['box_7'].value }}</div>
+        </td>
+        <td (click)="selectedBoxes(8)">
+          <div class="text-game">{{ gameData.boxes['box_8'].value }}</div>
+        </td>
+        <td (click)="selectedBoxes(9)">
+          <div class="text-game">{{ gameData.boxes['box_9'].value }}</div>
+        </td>
       </tr>
       </tbody>
     </table>
 
     <div class="col-12 text-center mb-6" style="margin-top: 5%; margin-bottom: 5%">
-      <button type="button" class="btn btn-outline-dark" (click)="logout()">Salir</button>
+      <button type="button" class="btn btn btn-warning" (click)="resetGame()"
+              *ngIf="gameOver"
+              [disabled]="sending || sendingReset">
+        Reiniciar
+      </button> &nbsp; &nbsp;
+      <button type="button" class="btn btn-outline-dark" (click)="logout()" [disabled]="sending || sendingReset">Salir
+      </button>
     </div>
 
   </div>
@@ -48,8 +75,10 @@
     <img src="./assets/img/secondPlayer.png" alt="secondPlayer" height="150" width="150" class="img-game center-c">
     <br>
     <div class="text-center">
-      <span class="badge badge-success" *ngIf="gameData.secondPlayer.id === currentTurn">TURNO ACTUAL</span>
-      <span class="badge badge-secondary" *ngIf="gameData.secondPlayer.id !== currentTurn">ESPERA TU TURNO</span>
+      <span class="badge badge-success" *ngIf="gameOver && winnerId === gameData.secondPlayer.id "><i
+        class="fa fa-check-circle" aria-hidden="true"></i> ¡¡ ERES EL GANADOR !!</span><br><br>
+      <span class="badge badge-primary" *ngIf="gameData.secondPlayer.id === currentTurn && !gameOver">TURNO ACTUAL</span>
+      <span class="badge badge-secondary" *ngIf="gameData.secondPlayer.id !== currentTurn && !gameOver">ESPERA TU TURNO</span>
     </div>
   </div>
 

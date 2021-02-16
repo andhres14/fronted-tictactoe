@@ -15,6 +15,8 @@ export class InitComponent implements OnInit {
 
   public gameToJoin: number;
   public openInp: boolean;
+  public sendingNewGame: boolean;
+  public sendingJoinToParty: boolean;
 
   constructor(private gameService: GameService,
               private router: Router) {
@@ -24,6 +26,7 @@ export class InitComponent implements OnInit {
   }
 
   newGame(): void {
+    this.sendingNewGame = true;
     this.gameService.createNewGame()
       .subscribe(resp => {
         this.joinToGame({
@@ -33,19 +36,28 @@ export class InitComponent implements OnInit {
           currentTurn: resp.firstPlayer.id,
           boxes: resp.gameBoxes
         });
+        this.sendingNewGame = false;
+      }, err => {
+        Swal.fire('Error', err.error.message, 'error');
+        this.sendingNewGame = false;
       });
   }
 
   joinToParty(gameId: number): void {
+    this.sendingJoinToParty = true;
     this.gameService.getGameInfo(gameId)
       .subscribe(resp => {
         this.joinToGame({
           gameId: resp.game.id,
           firstPlayer: resp.game.first_player,
           secondPlayer: resp.game.second_player,
-          currentTurn: resp.game.first_player.id,
+          currentTurn: resp.game.current_turn,
           boxes: resp.gameBoxes
         });
+        this.sendingJoinToParty = false;
+      }, err => {
+        Swal.fire('Error', err.error.message, 'error');
+        this.sendingJoinToParty = false;
       });
   }
 
