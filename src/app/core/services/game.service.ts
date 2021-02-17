@@ -18,6 +18,7 @@ export class GameService {
 
   checkInProgress(): Observable<boolean> {
     const data = JSON.parse(localStorage.getItem('gameData'));
+    console.log(data);
     return of(!!(data && data.gameId && !data.isGameOver));
   }
 

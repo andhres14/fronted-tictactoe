@@ -22,6 +22,7 @@ export class GameComponent implements OnInit, OnDestroy {
   constructor(private gameService: GameService) {
     this.sending = false;
     this.sendingReset = false;
+    this.gameOver = false;
   }
 
   ngOnInit(): void {
@@ -54,7 +55,7 @@ export class GameComponent implements OnInit, OnDestroy {
           secondPlayer: this.gameData.secondPlayer,
           boxes: this.gameData.boxes,
           currentTurn: this.currentTurn,
-          isGameOver: true
+          isGameOver: false
         }));
         this.sending = false;
 
@@ -85,7 +86,11 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   resetGame(): void {
+    this.gameOver = false;
+    this.winnerId = null;
+    this.winnerBoxes = {};
     this.sendingReset = true;
+
     this.gameService.resetGame({
       first_player: this.gameData.firstPlayer.id,
       second_player: this.gameData.secondPlayer.id,
@@ -95,14 +100,13 @@ export class GameComponent implements OnInit, OnDestroy {
         firstPlayer: resp.firstPlayer,
         secondPlayer: resp.secondPlayer,
         currentTurn: resp.currentTurn,
-        boxes: resp.gameBoxes
+        boxes: resp.gameBoxes,
+        isGameOver: false
       };
+      console.log(newData);
       localStorage.setItem('gameData', JSON.stringify(newData));
       this.gameData = newData;
       this.sendingReset = false;
-      this.gameOver = null;
-      this.winnerId = null;
-      this.winnerBoxes = {};
       this.checkMarkToUse();
     }, err => {
       Swal.fire('Error', err.error.message, 'error');
