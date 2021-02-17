@@ -36,7 +36,7 @@ export class GameService {
   }
 
   resetGame(formData: { first_player: string, second_player: string }): Observable<any> {
-    return this.http.post(`${ baseUrl }/games`, formData)
+    return this.http.post(`${ baseUrl }/games/reset`, formData)
       .pipe(
         map( (resp: any) => resp )
       );

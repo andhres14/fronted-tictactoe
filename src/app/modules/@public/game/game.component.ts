@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GameService } from '../../../core/services/game.service';
 import Swal from 'sweetalert2';
 
@@ -7,15 +7,17 @@ import Swal from 'sweetalert2';
   templateUrl: './game.component.html',
   styles: []
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
 
   public gameData;
   public currentTurn: number;
   public markCurrent: string;
   public sending: boolean;
   public sendingReset: boolean;
+  public playerNameToEdit: boolean;
   public gameOver: boolean;
   public winnerId: number;
+  public winnerBoxes = {};
 
   constructor(private gameService: GameService) {
     this.sending = false;
@@ -29,10 +31,15 @@ export class GameComponent implements OnInit {
     this.checkMarkToUse();
   }
 
+  ngOnDestroy(): void {
+    localStorage.removeItem('gameData');
+  }
+
   selectedBoxes(box: number): void {
     if (this.sending || this.gameOver || this.gameData.boxes[`box_${ box }`].value) {
       return;
     }
+
     this.sending = true;
     this.gameData.boxes[`box_${ box }`].value = this.markCurrent;
     this.gameService.playGame(this.gameData.gameId, { player: this.currentTurn, box_selected: box })
@@ -49,6 +56,7 @@ export class GameComponent implements OnInit {
         }));
         this.sending = false;
 
+        // winner
         if (resp.gameOver && resp.winnerId) {
           this.winnerId = resp.winnerId;
           const userWinner = this.winnerId === this.gameData.firstPlayer.id
@@ -56,8 +64,10 @@ export class GameComponent implements OnInit {
             : this.gameData.secondPlayer.nick;
           Swal.fire('Felicitaciones !!', `${ userWinner } eres el ganador de esta partida`, 'success');
           this.gameOver = true;
+          this.winnerBoxes = resp.boxWinners;
         }
 
+        // not winner - game over
         if (resp.gameOver && !this.winnerId) {
           Swal.fire('Información', resp.message, 'info');
           this.gameOver = true;
@@ -83,7 +93,7 @@ export class GameComponent implements OnInit {
         gameId: resp.gameId,
         firstPlayer: resp.secondPlayer,
         secondPlayer: resp.firstPlayer,
-        currentTurn: resp.secondPlayer.id,
+        currentTurn: resp.firstPlayer.id,
         boxes: resp.gameBoxes
       };
       localStorage.setItem('gameData', JSON.stringify(newData));
@@ -91,6 +101,7 @@ export class GameComponent implements OnInit {
       this.sendingReset = false;
       this.gameOver = null;
       this.winnerId = null;
+      this.winnerBoxes = {};
     }, err => {
       Swal.fire('Error', err.error.message, 'error');
       this.sendingReset = false;
@@ -114,6 +125,15 @@ export class GameComponent implements OnInit {
       this.markCurrent = 'X';
     } else {
       this.markCurrent = 'O';
+    }
+  }
+
+  changePlayerName(event): void {
+    console.log(event);
+    if (event) {
+      this.playerNameToEdit = false;
+      this.gameData.firstPlayer.nick = event;
+      localStorage.setItem('gameData', JSON.stringify(this.gameData));
     }
   }
 
