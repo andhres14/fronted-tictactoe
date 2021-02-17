@@ -47,7 +47,6 @@ export class GameComponent implements OnInit, OnDestroy {
       .subscribe(resp => {
         this.checkCurrentUser();
         this.checkMarkToUse();
-        console.log(this.currentTurn);
 
         localStorage.setItem('gameData', JSON.stringify({
           gameId: this.gameData.gameId,
@@ -77,7 +76,6 @@ export class GameComponent implements OnInit, OnDestroy {
         }
 
       }, err => {
-        console.log(err);
         Swal.fire('Bad Request', err.error.message, 'error');
         this.checkCurrentUser();
         this.checkMarkToUse();
@@ -103,7 +101,6 @@ export class GameComponent implements OnInit, OnDestroy {
         boxes: resp.gameBoxes,
         isGameOver: false
       };
-      console.log(newData);
       localStorage.setItem('gameData', JSON.stringify(newData));
       this.gameData = newData;
       this.sendingReset = false;
@@ -135,7 +132,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   changePlayerName(event): void {
-    console.log(event);
     if (event) {
       this.playerNameToEdit = false;
       this.gameData.firstPlayer.nick = event;
