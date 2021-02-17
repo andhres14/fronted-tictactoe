@@ -9,13 +9,15 @@
     <h3 class="text-center">
       {{ gameData.firstPlayer.nick }}
       <small>
-        <i class="fa pointer" [ngClass]="{'fa-pencil': !playerNameToEdit, 'fa-close': playerNameToEdit}"
+        <i class="fa pointer" *ngIf="gameData.firstPlayer.id === currentTurn"
+           [ngClass]="{'fa-pencil': !playerNameToEdit, 'fa-close': playerNameToEdit}"
            (click)="playerNameToEdit = (!playerNameToEdit)"></i>
       </small>
     </h3>
 
     <div class="col-12 text-center" *ngIf="playerNameToEdit">
-      <app-player-name [gameId]="gameData.gameId" [playerId]="gameData.firstPlayer.id" (playerNameChanged)="changePlayerName($event)" ></app-player-name>
+      <app-player-name [gameId]="gameData.gameId" [playerId]="gameData.firstPlayer.id"
+                       (playerNameChanged)="changePlayerName($event)"></app-player-name>
     </div>
 
     <br>
