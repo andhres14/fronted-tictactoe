@@ -13,6 +13,7 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
+      { path: '', component: InitComponent },
       { path: 'app', component: InitComponent },
       { path: 'game', canActivate: [GameGuard], component: GameComponent }
     ]
