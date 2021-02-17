@@ -52,7 +52,8 @@ export class GameComponent implements OnInit, OnDestroy {
           firstPlayer: this.gameData.firstPlayer,
           secondPlayer: this.gameData.secondPlayer,
           boxes: this.gameData.boxes,
-          currentTurn: this.currentTurn
+          currentTurn: this.currentTurn,
+          isGameOver: true
         }));
         this.sending = false;
 
@@ -88,7 +89,6 @@ export class GameComponent implements OnInit, OnDestroy {
       first_player: this.gameData.firstPlayer.id,
       second_player: this.gameData.secondPlayer.id,
     }).subscribe(resp => {
-      console.log(resp);
       const newData = {
         gameId: resp.gameId,
         firstPlayer: resp.secondPlayer,

@@ -18,7 +18,7 @@ export class GameGuard implements CanActivate {
       .pipe(
         tap(isValid => {
           if (!isValid) {
-            this.router.navigateByUrl('/app');
+            this.gameService.logout();
           }
         })
       );
