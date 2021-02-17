@@ -18,6 +18,12 @@ import { PlayerNameComponent } from './@public/components/player-name.component'
     MainRoutingModule,
     HttpClientModule,
     FormsModule
+  ],
+  exports: [
+    MainComponent,
+    GameComponent,
+    InitComponent,
+    PlayerNameComponent
   ]
 })
 export class MainModule {

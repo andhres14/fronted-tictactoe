@@ -16,48 +16,42 @@ export class GameService {
               private router: Router) {
   }
 
-  checkToken(): Observable<boolean> {
-    return this.http.get(`${ baseUrl }/login/refresh`).pipe(
-      map((resp: any) => {
-        const { name, email, google, role, img = '', uid } = resp.user;
-        localStorage.setItem('userToken', resp.token);
-        return true;
-      }),
-      catchError(err => of(err))
-    );
+  checkInProgress(): Observable<boolean> {
+    const data = JSON.parse(localStorage.getItem('gameData'));
+    return of(!!(data && data.gameId));
   }
 
 
   createNewGame(): Observable<any> {
     return this.http.post(`${ baseUrl }/games`, {})
       .pipe(
-        map( (resp: any) => resp )
+        map((resp: any) => resp)
       );
   }
 
   resetGame(formData: { first_player: string, second_player: string }): Observable<any> {
     return this.http.post(`${ baseUrl }/games/reset`, formData)
       .pipe(
-        map( (resp: any) => resp )
+        map((resp: any) => resp)
       );
   }
 
   getGameInfo(gameId: number): Observable<any> {
     return this.http.get(`${ baseUrl }/games/${ gameId }`)
       .pipe(
-        map( (resp: any) => resp )
+        map((resp: any) => resp)
       );
   }
 
   playGame(gameId: number, formData: { player: number, box_selected: number }): Observable<any> {
     return this.http.put(`${ baseUrl }/games/${ gameId }`, formData)
       .pipe(
-        map( (resp: any) => resp )
+        map((resp: any) => resp)
       );
   }
 
   logout(): void {
     localStorage.removeItem('gameData');
-    this.router.navigateByUrl('/welcome/app');
+    this.router.navigateByUrl('/app');
   }
 }
