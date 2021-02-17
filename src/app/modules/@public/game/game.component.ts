@@ -46,6 +46,7 @@ export class GameComponent implements OnInit, OnDestroy {
       .subscribe(resp => {
         this.checkCurrentUser();
         this.checkMarkToUse();
+        console.log(this.currentTurn);
 
         localStorage.setItem('gameData', JSON.stringify({
           gameId: this.gameData.gameId,
@@ -91,9 +92,9 @@ export class GameComponent implements OnInit, OnDestroy {
     }).subscribe(resp => {
       const newData = {
         gameId: resp.gameId,
-        firstPlayer: resp.secondPlayer,
-        secondPlayer: resp.firstPlayer,
-        currentTurn: resp.firstPlayer.id,
+        firstPlayer: resp.firstPlayer,
+        secondPlayer: resp.secondPlayer,
+        currentTurn: resp.currentTurn,
         boxes: resp.gameBoxes
       };
       localStorage.setItem('gameData', JSON.stringify(newData));
@@ -102,6 +103,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.gameOver = null;
       this.winnerId = null;
       this.winnerBoxes = {};
+      this.checkMarkToUse();
     }, err => {
       Swal.fire('Error', err.error.message, 'error');
       this.sendingReset = false;

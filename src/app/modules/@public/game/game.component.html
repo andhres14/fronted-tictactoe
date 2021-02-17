@@ -2,6 +2,7 @@
   <div class="col-12 text-center mb-6 mg-general">
     <h1># Tic-Tac-Toe - Partida #{{ gameData.gameId }}</h1>
     <span class="badge badge-primary" *ngIf="sending"><i class="fa fa-spin fa-refresh"></i> ENVIANDO...</span>
+    <span class="badge badge-success" *ngIf="!sending && !gameOver"><i class="fa fa-table"></i> EN JUEGO</span>
   </div>
 
   <div class="col">
@@ -84,7 +85,7 @@
   <div class="col">
     <h3 class="text-center">{{ gameData.secondPlayer.nick }}</h3>
     <br>
-    <img src="./assets/img/secondPlayer.png" alt="secondPlayer" height="150" width="150" class="img-game center-c">
+    <img src="./assets/img/firstPlayer.png" alt="secondPlayer" height="150" width="150" class="img-game center-c">
     <br>
     <div class="text-center">
       <span class="badge badge-success" *ngIf="gameOver && winnerId === gameData.secondPlayer.id "><i
