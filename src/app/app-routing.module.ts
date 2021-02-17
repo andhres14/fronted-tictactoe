@@ -6,7 +6,7 @@ import { MainRoutingModule } from './modules/main-routing.module';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/app', pathMatch: 'full' },
+  { path: '', redirectTo: '/game', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent }
 ];
 

@@ -10,12 +10,11 @@ import { GameComponent } from './@public/game/game.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'game',
     component: MainComponent,
     children: [
       { path: '', component: InitComponent },
-      { path: 'app', component: InitComponent },
-      { path: 'game', canActivate: [GameGuard], component: GameComponent }
+      { path: 'board', canActivate: [GameGuard], component: GameComponent }
     ]
   }
 

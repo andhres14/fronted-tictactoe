@@ -63,7 +63,7 @@ export class InitComponent implements OnInit {
 
   joinToGame(dataForGame): void {
     localStorage.setItem('gameData', JSON.stringify(dataForGame));
-    this.router.navigateByUrl('/game');
+    this.router.navigateByUrl('/game/board');
   }
 
   showGameInput(): void {

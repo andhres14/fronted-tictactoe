@@ -52,6 +52,6 @@ export class GameService {
 
   logout(): void {
     localStorage.removeItem('gameData');
-    this.router.navigateByUrl('/app');
+    this.router.navigateByUrl('/game');
   }
 }
